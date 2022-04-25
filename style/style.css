@@ -1,3 +1,18 @@
 h1{
     text-align: center;
 }
+
+p{
+    font-size: 25px;
+    font-weight: 400;
+    display: block;
+    margin-block-start: 1rem;
+    margin-block-end: 1rem;
+    margin-inline-end: 2rem;
+}
+
+
+.game-content{
+    padding-left: 6%;
+    
+}
