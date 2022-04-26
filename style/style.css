@@ -1,7 +1,3 @@
-h1{
-    text-align: center;
-}
-
 p{
     font-size: 25px;
     font-weight: 400;
@@ -15,4 +11,8 @@ p{
 .game-content{
     padding-left: 6%;
     
+}
+
+.header{
+    text-align: center;
 }
