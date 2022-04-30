@@ -1,18 +1,26 @@
-p{
-    font-size: 25px;
-    font-weight: 400;
-    display: block;
-    margin-block-start: 1rem;
-    margin-block-end: 1rem;
-    margin-inline-end: 2rem;
-}
 
 
 .game-content{
-    padding-left: 6%;
+    padding: 11.2% ;
+    justify-content: center;
+    align-content: center;
+    
+}
+
+.container-fluid{
+    justify-content: center;
+    align-content: center;
     
 }
 
 .header{
     text-align: center;
 }
+
+.form-container{
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    
+}
+
