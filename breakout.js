@@ -1,6 +1,10 @@
 const grid = document.querySelector('.grid')
 const blockWidth = 100
 const blockHeight = 20
+const boardWidth = 1200
+
+const userStartPoint = [550, 10]
+let currentPosition = userStartPoint
 
 //draw block
 
@@ -49,13 +53,12 @@ const allBlocks = [
     new drawBlock(880, 210),
     new drawBlock(990, 210),
     new drawBlock(1100, 210),
-    
-    
-]
-console.log(allBlocks[0])
-//create block
 
-createNewBlock = () => {
+
+]
+
+//create block
+addNewBlocks = () => {
     for (let i = 0; i < allBlocks.length; i++) {
         const block = document.createElement('div')
         block.classList.add('block')
@@ -66,4 +69,43 @@ createNewBlock = () => {
 
 }
 
-createNewBlock()
+addNewBlocks()
+
+//draw user block
+drawUser = () => {
+    user.style.left = currentPosition[0] + 'px'
+    user.style.bottom = currentPosition[1] + 'px'
+}
+
+
+// add user
+const user = document.createElement('div')
+user.classList.add('user')
+drawUser()
+grid.appendChild(user)
+
+
+
+//controls
+
+moveUser = (e) => {
+    switch (e.key) {                                         //listens out for keys
+        case 'ArrowLeft':
+            if (currentPosition[0] > 0) {
+                currentPosition[0] -= 10
+                drawUser();
+
+            }
+            break;
+        case "ArrowRight":
+            if (currentPosition[0] < boardWidth - blockWidth) {
+                currentPosition[0] += 10
+                drawUser()
+            }
+            break
+
+
+    }
+}
+
+document.addEventListener('keydown', moveUser)  //listens for when a key is pressed and moves the user on the xaxis
