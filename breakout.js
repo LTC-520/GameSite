@@ -2,14 +2,23 @@ const grid = document.querySelector('.grid')
 const blockWidth = 100
 const blockHeight = 20
 const boardWidth = 1200
+const ballDiameter = 20
+let xDirection = 2
+let yDirection = 2
+let timerId 
 
 const userStartPoint = [550, 10]
 let currentPosition = userStartPoint
 
+const ballStartPosition = [590, 32]
+let ballCurrentPosition = ballStartPosition
+
 //draw block
 
+//  the bottom-left point of the block is used and anchor to map out the other points of the block
+// whatever gets passed into the constructor is the bottom-left point
 class drawBlock {
-    constructor(xAxis, yAxis) {
+    constructor(xAxis, yAxis) { 
         this.bottomLeft = [xAxis, yAxis]
         this.bottomRight = [xAxis + blockWidth, yAxis]
         this.topLeft = [xAxis, yAxis + blockHeight]
@@ -76,6 +85,13 @@ drawUser = () => {
     user.style.left = currentPosition[0] + 'px'
     user.style.bottom = currentPosition[1] + 'px'
 }
+// draw ball
+drawBall=()=>{
+    ball.style.left = ballCurrentPosition[0] + 'px'
+    ball.style.bottom = ballCurrentPosition[1] + 'px'
+    }
+
+
 
 
 // add user
@@ -89,7 +105,7 @@ grid.appendChild(user)
 //controls
 
 moveUser = (e) => {
-    switch (e.key) {                                         //listens out for keys
+switch (e.key) {                        //listens out for keys
         case 'ArrowLeft':
             if (currentPosition[0] > 0) {
                 currentPosition[0] -= 10
@@ -109,3 +125,35 @@ moveUser = (e) => {
 }
 
 document.addEventListener('keydown', moveUser)  //listens for when a key is pressed and moves the user on the xaxis
+
+// add ball
+
+const ball = document.createElement('div')
+ball.classList.add('ball')
+drawBall()
+grid.appendChild(ball)
+
+//ball movement
+
+moveBall=()=>{
+    ballCurrentPosition[0] += xDirection
+    ballCurrentPosition[1] += yDirection
+    drawBall()
+    checkForCollisions()
+}
+
+timerId = setInterval(moveBall, 30)
+
+checkForCollisions=()=>{
+    //checks for collision against grid
+    if(ballCurrentPosition[0] >= (boardWidth - ballDiameter)){
+        changeDirection()
+    }
+}
+
+changeDirection=()=>{
+    if(xDirection  === 2 && yDirection === 2){
+        xDirection =-2
+        return
+    }
+}
