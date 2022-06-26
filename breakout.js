@@ -1,11 +1,14 @@
 const grid = document.querySelector('.grid')
+// const score = document.querySelector('#score')
 const blockWidth = 100
 const blockHeight = 20
 const boardWidth = 1200
 const ballDiameter = 20
+const boardHeight = 300
+
 let xDirection = 2
 let yDirection = 2
-let timerId 
+let timerId
 
 const userStartPoint = [550, 10]
 let currentPosition = userStartPoint
@@ -18,7 +21,7 @@ let ballCurrentPosition = ballStartPosition
 //  the bottom-left point of the block is used and anchor to map out the other points of the block
 // whatever gets passed into the constructor is the bottom-left point
 class drawBlock {
-    constructor(xAxis, yAxis) { 
+    constructor(xAxis, yAxis) {
         this.bottomLeft = [xAxis, yAxis]
         this.bottomRight = [xAxis + blockWidth, yAxis]
         this.topLeft = [xAxis, yAxis + blockHeight]
@@ -86,10 +89,10 @@ drawUser = () => {
     user.style.bottom = currentPosition[1] + 'px'
 }
 // draw ball
-drawBall=()=>{
+drawBall = () => {
     ball.style.left = ballCurrentPosition[0] + 'px'
     ball.style.bottom = ballCurrentPosition[1] + 'px'
-    }
+}
 
 
 
@@ -105,7 +108,7 @@ grid.appendChild(user)
 //controls
 
 moveUser = (e) => {
-switch (e.key) {                        //listens out for keys
+    switch (e.key) {                        //listens out for keys
         case 'ArrowLeft':
             if (currentPosition[0] > 0) {
                 currentPosition[0] -= 10
@@ -135,7 +138,7 @@ grid.appendChild(ball)
 
 //ball movement
 
-moveBall=()=>{
+moveBall = () => {
     ballCurrentPosition[0] += xDirection
     ballCurrentPosition[1] += yDirection
     drawBall()
@@ -144,16 +147,41 @@ moveBall=()=>{
 
 timerId = setInterval(moveBall, 30)
 
-checkForCollisions=()=>{
+//score display
+const score = document.createElement('div')
+score.setAttribute('id', 'score')
+score.innerHTML = 0
+document.body.appendChild(score)
+
+checkForCollisions = () => {
     //checks for collision against grid
-    if(ballCurrentPosition[0] >= (boardWidth - ballDiameter)){
+    if (ballCurrentPosition[0] >= (boardWidth - ballDiameter) || 
+        ballCurrentPosition[1] >= (boardHeight - ballDiameter)||
+        ballCurrentPosition[0] <= 0) {
         changeDirection()
+    }
+    // check for game over
+    if(ballCurrentPosition[1] <=0){
+        clearInterval(timerId)
+        score.innerHTML += ' - Game Over'
     }
 }
 
-changeDirection=()=>{
-    if(xDirection  === 2 && yDirection === 2){
-        xDirection =-2
+changeDirection = () => {
+    if (xDirection === 2 && yDirection === 2) {
+        yDirection = -2
+        return
+    }
+    if (xDirection === 2 && yDirection === -2) {
+        xDirection = -2
+        return
+    }
+    if (xDirection === -2 && yDirection === -2) {
+        yDirection = 2
+        return
+    }
+    if (xDirection === -2 && yDirection === 2) {
+        xDirection = 2
         return
     }
 }
